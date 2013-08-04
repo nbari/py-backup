@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 
 """
-Usage: backup.py
-
-src_dir = directory containing the files the original files
-out_dir = directory where the files will be written
-password = password used to encrypt the files
+Usage: backup.py -h
 """
 
 import bz2
@@ -67,23 +63,13 @@ def create(src, dst, passphrase, compress):
     backup = enc_dec()
     with open(src, 'rb') as in_file, open(os.path.join(dst, file_name), 'wb') as out_file:
         backup.encrypt(in_file, out_file, password)
-        if compress:
-            in_file = os.path.join(dst, file_name)
-            with open(in_file, 'rb') as input:
-                with bz2.BZ2File(in_file + '.bz2', 'wb', compresslevel=9) as output:
-                    copyfileobj(input, output)
-            os.remove(in_file)
-            print '-',
-            return (time.time(), file_name + '.bz2', checksum, password, 1)
-        else:
-            print '.',
-            return (time.time(), file_name, checksum, password, 0)
+        print '.',
+        return (time.time(), file_name, checksum, password)
 
 def restore(src, dst, log):
     file_name = log[1]
     file_hash = log[2]
     password = log[3]
-    compress = log[4]
     src = os.path.join(src, file_name)
     backup = enc_dec()
     with open(src, 'rb') as in_file, open(os.path.join(dst, file_name), 'wb') as out_file:
