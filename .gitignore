@@ -33,3 +33,8 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+tmp_data_dir
+out_dir
+restore_dir
+report.txt
