@@ -74,8 +74,6 @@ def read(db):
                     db.put(h, filename)
                     if count % 100 == 0:
                         print "{:,d}".format(count)
-                    if count == 100:
-                        return
 
 
 if __name__ == '__main__':
